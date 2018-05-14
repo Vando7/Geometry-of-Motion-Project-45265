@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8"/>
+
+	<link rel="stylesheet" type="text/css" href="mecho.css">
+	<script src="mecho.min.js"></script>
+	<script src ="particle.min.js"></script>
+	<script src ="firework.min.js"></script>
+
+	<script>
+			//////////////////////////////////////////////
+			/// Имена: Иван Михайлов
+			/// ФН: 45265
+			/// Специалност: Информатика
+			/// Прочел съм критерии 44
+			function main(){
+				scene = new Mecho();
+				scene.onTime = animate;
+				scene.viewObject.distance = 120;
+				scene.ground = false;
+				scene.sky = [0.529, 0.808, 0.922];
+
+				platform = box([2.5,0,-1],20,10,1)
+				platform.material = Mecho.WOOD;
+
+				p_1 = pillar([0,0,0],7.3,0.5,0.5,1.5);
+				p_2 = pillar([-5,0,0],7.3,0.5,0.5,1.5);
+
+				p_1.material=p_2.material=Mecho.BLUE;
+
+				centerRail = rail(p_1.otherPoint,5,0.3,0.5);
+				centerRail.material = Mecho.RED;
+				centerRail.rotV = 90;
+
+				// Beams one.
+				b_1 =  beam(p_1.otherPoint,5,0.2,0.2);
+				b_2 =  beam(p_1.otherPoint,5,0.2,0.2);
+				b_3 =  beam(p_1.otherPoint,5,0.2,0.2);
+				b_4 =  beam(p_1.otherPoint,5,0.2,0.2);
+
+				b_1.material=b_2.material=b_3.material=b_4.material=Mecho.BLUE;
+
+				b_1.center[0] -=1;
+				b_2.center[0] -=1;
+				b_3.center[0] -=1;
+				b_4.center[0] -=1;
+
+				b_1.rotV = 90;
+				b_2.rotV = 90;
+				b_3.rotV = 90;
+				b_4.rotV = 90;
+
+				b_1.rotS = 0
+				b_2.rotS = 90;
+				b_3.rotS = 180;
+				b_4.rotS = 270;
+
+				// Beams two.
+				b_5 = new beam(p_1.otherPoint,5,0.2,0.2);
+				b_6 = new beam(p_1.otherPoint,5,0.2,0.2);
+				b_7 = new beam(p_1.otherPoint,5,0.2,0.2);
+				b_8 = new beam(p_1.otherPoint,5,0.2,0.2);
+
+				b_5.material=b_6.material=b_7.material=b_8.material=Mecho.BLUE;
+
+				b_5.center[0] -=4;
+				b_6.center[0] -=4;
+				b_7.center[0] -=4;
+				b_8.center[0] -=4;
+
+				b_5.rotV = 90;
+				b_6.rotV = 90;
+				b_7.rotV = 90;
+				b_8.rotV = 90;
+
+				b_5.rotS = 0
+				b_6.rotS = 90;
+				b_7.rotS = 180;
+				b_8.rotS = 270;
+
+				// Tubes.
+				pipe_1 = tube(p_1.otherPoint,0.3,10.5,0,10)
+				pipe_1.center[0] -=1;
+				pipe_1.rotV = 90;
+
+				pipe_2 = tube(p_1.otherPoint,0.3,10.5,0,10)
+				pipe_2.center[0] -=4;
+				pipe_2.rotV = 90;
+
+				pipe_1.material=pipe_2.material=Mecho.RED;
+				//pipe_1.hollow=false;
+
+				// Cabin rails.
+				r_1 = rail(b_1.otherPoint,3);
+				r_2 = rail(b_1.otherPoint,3);
+				r_3 = rail(b_1.otherPoint,3);
+				r_4 = rail(b_1.otherPoint,3);
+				r_1.rotV = 90;
+				r_2.rotV = 90;
+				r_3.rotV = 90;
+				r_4.rotV = 90;
+
+				r_1.material=r_2.material=r_3.material=r_4.material=Mecho.RED;
+
+				// Cabins.
+				box_1 = box(b_1.otherPoint,2,3,2);
+				box_2 = box(b_1.otherPoint,2,3,2);
+				box_3 = box(b_1.otherPoint,2,3,2);
+				box_4 = box(b_1.otherPoint,2,3,2);
+
+				box_1.centerOffset = [1.5,0,1];
+				box_2.centerOffset = [1.5,0,1];
+				box_3.centerOffset = [1.5,0,1];
+				box_4.centerOffset = [1.5,0,1];
+				
+				box_1.material=box_2.material=box_3.material=box_4.material=Mecho.WHITE;
+				// Fireworks.
+				fireworksBox  = box([10,0,0],1,1,2);
+				fireworksBox2 = box([10,0,1.51],1.2,1.2,0.5);
+				fireworksBox.material=Mecho.RED;
+				
+				ROCKETS=new fireworkEmitter([10,0,0], 5);
+			}
+
+			function animate(){
+				b_1.rotS += 1;
+				b_2.rotS += 1;
+				b_3.rotS += 1;
+				b_4.rotS += 1;
+
+				b_5.rotS += 1;
+				b_6.rotS += 1;
+				b_7.rotS += 1;
+				b_8.rotS += 1;
+
+				r_1.center = b_1.otherPoint;
+				r_2.center = b_2.otherPoint;
+				r_3.center = b_3.otherPoint;
+				r_4.center = b_4.otherPoint;
+
+				box_1.center = b_1.otherPoint;
+				box_2.center = b_2.otherPoint;
+				box_3.center = b_3.otherPoint;
+				box_4.center = b_4.otherPoint;
+
+				ROCKETS.animate();
+			}
+
+	</script>
+</head>
+
+<body onload="main()">
+	<h1>My name jeff</h1>
+</body>
